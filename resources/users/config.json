@@ -1,0 +1,21 @@
+{
+	"type": "UserCollection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "name",
+			"order": 0
+		},
+		"coasters": {
+			"name": "coasters",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "coasters",
+			"order": 1
+		}
+	}
+}

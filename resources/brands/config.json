@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"distributor": {
+			"name": "distributor",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "distributor",
+			"order": 1
+		},
+		"brewery": {
+			"name": "brewery",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "brewery",
+			"order": 2
+		}
+	}
+}
