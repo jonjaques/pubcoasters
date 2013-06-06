@@ -6,7 +6,6 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-coffee": "~0.7.0",
     "grunt-ember-templates": "~0.4.7",
     "grunt-contrib-watch": "~0.4.4"
   },

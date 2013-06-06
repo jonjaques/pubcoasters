@@ -17,7 +17,7 @@
       </div>
 
       <div class="control-group">
-        <label class="control-label" for="newImages">Attach Images</label>
+        <label class="control-label">Attach Images</label>
         <div class="controls">
           <button class="btn btn-info" {{action openPicker}}>Upload</button>
         </div>
@@ -35,6 +35,22 @@
         </div>
         {{/if}}
       </div>
+
+      <!--<div class="control-group">
+        <label class="control-label" for="newTag">Tags</label>
+        <ul class="tags nav">
+          {{#each tag in newTags}}
+            <li class="badge">
+              {{tag}}
+              <i class="icon icon-remove-sign" {{action removeTag bubbles=false}}></i>
+            </li>
+          {{/each}}
+        </ul>
+        <div class="controls">
+          {{view Ember.TextField valueBinding="newTagInput" id="newTag"}}
+          <button class="btn btn-info" {{action addTag}}><i class="icon-plus-sign icon-white"></i></button>
+        </div>
+      </div>-->
 
       <div class="form-actions">
         <button type="submit" class="btn btn-primary" {{action createCoaster}}>Save changes</button>

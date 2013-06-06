@@ -32,6 +32,19 @@ define(['app', 'ember', 'filepicker', 'jquery'], function(App, Ember, filepicker
         }
       },
 
+      addTag: function() {
+        var tag = this.get('newTagInput');
+        var tags = this.get('newTags');
+        if (!tags || !tags.length) tags = [];
+        tags.push(tag);
+        this.set('newTagInput', '');
+        this.set('newTags', tags);
+      },
+
+      removeTag: function() {
+        console.log(arguments);
+      },
+
       openPicker: function() {
         var options = {
           extensions: ['.jpg', '.jpeg', '.gif', '.png'],

@@ -1,20 +1,24 @@
 <div class="row">
-  <div class="span12">
+  <div class="span12" id="CoasterHome">
     {{#if model.isLoaded}}
       {{#each coaster in model}}
         <div class="coaster">
           <div class="coaster-header">
-            <h1>{{#linkTo coasters.show coaster}}{{coaster.name}}{{/linkTo}}</h1>
-          </div>
-          <div class="coaster-body">
             {{#if coaster.primaryImage}}
               <img {{bindAttr src="coaster.primaryImage" alt="coaster.name"}}>
             {{/if}}
           </div>
+          <div class="coaster-body">
+            <h1>{{#linkTo coasters.show coaster}}{{coaster.name}}{{/linkTo}}</h1>
+          </div>
           <div class="coaster-footer">
-            {{#each tag in coaster.tags}}
-              <li class="badge">{{tag}}</li>
-            {{/each}}
+            {{#if coaster.tags}}
+              <ul class="nav tags">
+                {{#each tag in coaster.tags}}
+                  <li class="badge">{{tag}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
           </div>
         </div>
       {{/each}}

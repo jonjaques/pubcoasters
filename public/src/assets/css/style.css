@@ -13,3 +13,45 @@
 #loginForm {
   margin-top: 100px;
 }
+
+#CoasterHome {
+  padding-top: 20px;
+}
+
+.coaster {
+  width: 200px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #bbb;
+  background: #e8e8e8;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.coaster-body, .coaster-footer {
+  padding: 10px;
+}
+
+.coaster-footer {
+  padding-top: 0;
+}
+
+.coaster-body h1 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.coaster-header img {
+  margin: 10px;
+  width: 180px;
+  border-radius: 90px;
+  -webkit-transition: border-radius 0.5s ease;
+}
+.coaster-header img:hover {
+  border-radius: 0;
+}
+
+.coaster-footer {
+
+}
