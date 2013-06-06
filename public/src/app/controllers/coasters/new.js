@@ -5,6 +5,7 @@ define(['app', 'ember', 'filepicker', 'jquery'], function(App, Ember, filepicker
       resetForm: function() {
         this.set('newName', '');
         this.set('newDesc', '');
+        this.set('newImages', []);
       },
 
       cancel: function() {
