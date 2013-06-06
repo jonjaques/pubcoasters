@@ -1,0 +1,24 @@
+{
+  "name": "pubcoasters",
+  "version": "0.0.1",
+  "description": "App for displaying pub coasters",
+  "main": "app.dpd",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-ember-templates": "~0.4.7",
+    "grunt-contrib-watch": "~0.4.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonjaques/pubcoasters.git"
+  },
+  "author": "Jon Jaques",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "38d18d690170a81a8a084acfe6ef1c6cd6fcd9f7"
+}

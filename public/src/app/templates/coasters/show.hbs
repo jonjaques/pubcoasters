@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="span12">
+
+    {{#with model}}
+      <h1 {{bindAttr>{{name}}</h1>
+      <ul class="tags nav">
+        {{#each tag in tags}}
+          <li class="badge">{{tag}}</li>
+        {{/each}}
+      </ul>
+      <div class="row">
+        <div class="body span3">
+          {{desc}}
+        </div>
+        <div class="images span9">
+          {{#each image in images}}
+            <img {{bindAttr src="image"}}>
+          {{/each}}
+        </div>
+      </div>
+    {{/with}}
+
+  </div>
+</div>

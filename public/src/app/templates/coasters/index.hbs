@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="span12">
+    <h1>Coasters, baby!</h1>
+
+    {{#if model.isLoaded}}
+      {{#each coaster in model}}
+        <p>{{coaster.id}} - {{#linkTo coasters.show coaster}}{{coaster.name}}{{/linkTo}}</p>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>

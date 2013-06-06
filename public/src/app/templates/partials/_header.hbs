@@ -1,0 +1,22 @@
+<div class="navbar navbar-static-top">
+  <div class="navbar-inner">
+    <div class="container">
+
+      {{view Ember.Bootstrap.navbarCollapseButton}}
+
+      <a class="brand" href="#/">{{title}}</a>
+
+      <div class="nav-collapse collapse">
+
+        <div class="pull-left">
+          {{partial "partials/menuNav"}}
+        </div>
+
+        <div class="pull-right">
+          {{partial "partials/loginNav"}}
+        </div>
+
+      </div> {{! /.nav-collapse }}
+    </div> {{! /.container }}
+  </div> {{! /.navbar-inner }}
+</div> {{! /.navbar }}

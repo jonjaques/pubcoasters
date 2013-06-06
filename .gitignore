@@ -2,3 +2,7 @@
 data
 node_modules
 components
+public/src/app/templates.js
+public/src/app/config.js
+public/src/assets/coasters/*.jpg
+public/src/assets/coasters/*.psd

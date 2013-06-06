@@ -1,5 +1,5 @@
-// Version: v1.0.0-rc.3-272-g4c74b2d
-// Last commit: 4c74b2d (2013-05-21 12:35:21 -0700)
+// Version: v1.0.0-rc.4-23-gbfd3023
+// Last commit: bfd3023 (2013-06-01 13:41:52 -0400)
 
 
 (function() {
@@ -151,8 +151,8 @@ Ember.deprecateFunc = function(message, func) {
 
 })();
 
-// Version: v1.0.0-rc.4
-// Last commit: 1acec81 (2013-05-27 20:18:28 -0500)
+// Version: v1.0.0-rc.4-23-gbfd3023
+// Last commit: bfd3023 (2013-06-01 13:41:52 -0400)
 
 
 (function() {
@@ -219,7 +219,7 @@ var define, requireModule;
 
   @class Ember
   @static
-  @version 1.0.0-rc.4
+  @version 1.0.0-rc.5
 */
 
 if ('undefined' === typeof Ember) {
@@ -246,10 +246,10 @@ Ember.toString = function() { return "Ember"; };
 /**
   @property VERSION
   @type String
-  @default '1.0.0-rc.4'
+  @default '1.0.0-rc.5'
   @final
 */
-Ember.VERSION = '1.0.0-rc.4';
+Ember.VERSION = '1.0.0-rc.5';
 
 /**
   Standard environmental variables. You can define these in a global `ENV`
@@ -1420,10 +1420,10 @@ var populateListeners = function(name) {
 };
 
 var time = (function() {
-	var perf = 'undefined' !== typeof window ? window.performance || {} : {};
-	var fn = perf.now || perf.mozNow || perf.webkitNow || perf.msNow || perf.oNow;
-	// fn.bind will be available in all the browsers that support the advanced window.performance... ;-)
-	return fn ? fn.bind(perf) : function() { return +new Date(); };
+  var perf = 'undefined' !== typeof window ? window.performance || {} : {};
+  var fn = perf.now || perf.mozNow || perf.webkitNow || perf.msNow || perf.oNow;
+  // fn.bind will be available in all the browsers that support the advanced window.performance... ;-)
+  return fn ? fn.bind(perf) : function() { return +new Date(); };
 })();
 
 
@@ -2777,14 +2777,14 @@ Map.create = function() {
 Map.prototype = {
   /**
     This property will change as the number of objects in the map changes.
-   
+
     @property length
     @type number
     @default 0
   */
   length: 0,
-    
-    
+
+
   /**
     Retrieve the value associated with a given key.
 
@@ -4368,7 +4368,7 @@ Ember.computed.alias = function(dependentKey) {
   @return {Ember.ComputedProperty} computed property which creates an
   one way computed property to the original value for property.
 
-  Where `computed.alias` aliases `get` and `set`, and allows for bidirectional 
+  Where `computed.alias` aliases `get` and `set`, and allows for bidirectional
   data flow, `computed.oneWay` only provides an aliased `get`. The `set` will
   not mutate the upstream property, rather causes the current property to
   become the value set. This causes the downstream property to permentantly
@@ -4630,7 +4630,7 @@ define("backburner",
           method = target[method];
         }
 
-        var stack = new Error().stack,
+        var stack = this.DEBUG ? new Error().stack : undefined,
             args = arguments.length > 3 ? slice.call(arguments, 3) : undefined;
         if (!this.currentInstance) { createAutorun(this); }
         return this.currentInstance.schedule(queueName, target, method, args, false, stack);
@@ -4646,7 +4646,7 @@ define("backburner",
           method = target[method];
         }
 
-        var stack = new Error().stack,
+        var stack = this.DEBUG ? new Error().stack : undefined,
             args = arguments.length > 3 ? slice.call(arguments, 3) : undefined;
         if (!this.currentInstance) { createAutorun(this); }
         return this.currentInstance.schedule(queueName, target, method, args, true, stack);
@@ -4695,7 +4695,7 @@ define("backburner",
           clearTimeout(laterTimer);
           laterTimer = null;
         }
-        laterTimer = setTimeout(function() {
+        laterTimer = window.setTimeout(function() {
           executeTimers(self);
           laterTimer = null;
           laterTimerExpiresAt = null;
@@ -4716,7 +4716,7 @@ define("backburner",
           if (debouncee[0] === target && debouncee[1] === method) { return; } // do nothing
         }
 
-        var timer = setTimeout(function() {
+        var timer = window.setTimeout(function() {
           self.run.apply(self, args);
 
           // remove debouncee
@@ -4777,7 +4777,7 @@ define("backburner",
 
     function createAutorun(backburner) {
       backburner.begin();
-      autorun = setTimeout(function() {
+      autorun = window.setTimeout(function() {
         backburner.end();
         autorun = null;
       });
@@ -4802,7 +4802,7 @@ define("backburner",
       });
 
       if (timers.length) {
-        laterTimer = setTimeout(function() {
+        laterTimer = window.setTimeout(function() {
           executeTimers(self);
           laterTimer = null;
           laterTimerExpiresAt = null;
@@ -5112,7 +5112,7 @@ Ember.run = function(target, method) {
     May be a function or a string. If you pass a string
     then it will be looked up on the passed target.
   @param {Object} [args*] Any additional arguments you wish to pass to the method.
-  @return {Object} return value from invoking the passed function. Please note, 
+  @return {Object} return value from invoking the passed function. Please note,
   when called within an existing loop, no return value is possible.
 */
 Ember.run.join = function(target, method) {
@@ -6580,6 +6580,29 @@ Ember.immediateObserver = function() {
 };
 
 /**
+  When observers fire, they are called with the arguments `obj`, `keyName`
+  and `value`. In a typical observer, value is the new, post-change value.
+
+  A `beforeObserver` fires before a property changes. The `value` argument contains
+  the pre-change value.
+
+  A `beforeObserver` is an alternative form of `.observesBefore()`.
+
+  ```javascript
+  App.PersonView = Ember.View.extend({
+    valueWillChange: function (obj, keyName, value) {
+      this.changingFrom = value;
+    }.observesBefore('content.value'),
+    valueDidChange: function(obj, keyName, value) {
+        // only run if updating a value already in the DOM
+        if(this.get('state') === 'inDOM') {
+            var color = value > this.changingFrom ? 'green' : 'red';
+            // logic
+        }
+    }.observes('content.value')
+  });
+  ```
+
   @method beforeObserver
   @for Ember
   @param {Function} func
@@ -19051,7 +19074,7 @@ function makeBindings(options) {
 Ember.Handlebars.helper = function(name, value) {
   if (Ember.View.detect(value)) {
     Ember.Handlebars.registerHelper(name, function(options) {
-      Ember.assert("You can only pass attributes as parameters to a application-defined helper", arguments.length < 3);
+      Ember.assert("You can only pass attributes as parameters (not values) to a application-defined helper", arguments.length < 2);
       makeBindings(options);
       return Ember.Handlebars.helpers.view.call(this, value, options);
     });
@@ -22787,7 +22810,7 @@ helpers = helpers || Ember.Handlebars.helpers; data = data || {};
   var buffer = '', stack1, hashTypes, hashContexts, escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
-  
+
   var buffer = '', hashTypes, hashContexts;
   data.buffer.push("<option value=\"\">");
   hashTypes = {};
@@ -22798,7 +22821,7 @@ function program1(depth0,data) {
   }
 
 function program3(depth0,data) {
-  
+
   var hashContexts, hashTypes;
   hashContexts = {'contentBinding': depth0};
   hashTypes = {'contentBinding': "STRING"};
@@ -22816,7 +22839,7 @@ function program3(depth0,data) {
   stack1 = helpers.each.call(depth0, "view.content", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   return buffer;
-  
+
 }),
   attributeBindings: ['multiple', 'disabled', 'tabindex', 'name'],
 
@@ -23765,7 +23788,7 @@ define("router",
         its ancestors.
       */
       reset: function() {
-        eachHandler(this.currentHandlerInfos, function(handler) {
+        eachHandler(this.currentHandlerInfos || [], function(handler) {
           if (handler.exit) {
             handler.exit();
           }
@@ -24907,6 +24930,9 @@ Ember.Route = Ember.Object.extend({
     Transition into another route while replacing the current URL if
     possible. Identical to `transitionTo` in all other respects.
 
+    Of the bundled location types, only `history` currently supports
+    this behavior.
+
     @method replaceWith
     @param {String} name the name of the route
     @param {...Object} models the
@@ -25349,6 +25375,8 @@ Ember.Route = Ember.Object.extend({
 function parentRoute(route) {
   var handlerInfos = route.router.router.targetHandlerInfos;
 
+  if (!handlerInfos) { return; }
+
   var parent, current;
 
   for (var i=0, l=handlerInfos.length; i<l; i++) {
@@ -25471,7 +25499,7 @@ function teardownView(route) {
 
 /*
   A TransitionEvent is passed as the argument for `transitionTo`
-  events and contains information about an attempted transition 
+  events and contains information about an attempted transition
   that can be modified or decorated by leafier `transitionTo` event
   handlers before the actual transition is committed by ApplicationRoute.
 
@@ -25482,7 +25510,7 @@ function teardownView(route) {
 Ember.TransitionEvent = Ember.Object.extend({
 
   /*
-    The Ember.Route method used to perform the transition.  Presently, 
+    The Ember.Route method used to perform the transition.  Presently,
     the only valid values are 'transitionTo' and 'replaceWith'.
    */
   transitionMethod: 'transitionTo',
@@ -25618,7 +25646,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
     disabled: Ember.computed(function(key, value) {
       if (value !== undefined) { this.set('_isDisabled', value); }
-      
+
       return value ? this.get('disabledClass') : false;
     }),
 
@@ -25641,7 +25669,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
       event.preventDefault();
       if (this.bubbles === false) { event.stopPropagation(); }
-      
+
       if (get(this, '_isDisabled')) { return false; }
 
       var router = this.get('router');
@@ -25710,7 +25738,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     </li>
     ```
 
-    To override this option for your entire application, see 
+    To override this option for your entire application, see
     "Overriding Application-wide Defaults".
 
     ### Handling `href`
@@ -25757,7 +25785,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
     </a>
     ```
 
-    To override this option for your entire application, see 
+    To override this option for your entire application, see
     "Overriding Application-wide Defaults".
 
     ### Supplying a model
@@ -26263,7 +26291,7 @@ Ember.onLoad('Ember.Handlebars', function(Handlebars) {
 
     Alternatively, a `target` option can be provided to the helper to change
     which object will receive the method call. This option must be a path
-    path to an object, accessible in the current context:
+    to an object, accessible in the current context:
 
     ```handlebars
     <script type="text/x-handlebars" data-template-name='a-template'>
@@ -26477,7 +26505,7 @@ Ember.ControllerMixin.reopen({
     Optionally supply a model for the route in question. The model
     will be serialized into the URL using the `serialize` hook of
     the route:
-    
+
     ```javascript
       aController.transitionToRoute('blogPost', aPost);
     ```
@@ -28084,10 +28112,11 @@ function resolverFor(namespace) {
 }
 
 function normalize(fullName) {
-  var split = fullName.split(':'),
+  var split = fullName.split(':', 2),
       type = split[0],
       name = split[1];
 
+  Ember.assert("Tried to normalize a container name without a colon (:) in it. You probably tried to lookup a name that did not contain a type, a colon, and a name. A proper lookup name would be `view:post`.", split.length === 2);
 
   if (type !== 'template') {
     var result = name;
@@ -28178,11 +28207,11 @@ Ember.ControllerMixin.reopen({
       needs: ['post']
     });
     ```
-    
+
     The application's single instance of these other
     controllers are accessible by name through the
     `controllers` property:
-    
+
     ```javascript
     this.get('controllers.post'); // instance of App.PostController
     ```
@@ -29911,12 +29940,6 @@ helper('wait', wait);
 
 })();
 
-
-})();
-// Version: v1.0.0-rc.4
-// Last commit: 1acec81 (2013-05-27 20:18:28 -0500)
-
-
 (function() {
 /**
 Ember
@@ -29926,3 +29949,5 @@ Ember
 
 })();
 
+
+})();

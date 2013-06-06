@@ -2,26 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
+  <title>PubCoasters</title>
   <link rel="stylesheet" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/bootstrap-responsive.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script src="vendor/require.js" data-main="main"></script>
+  <script src="vendor/require.js" data-main="app/main"></script>
 </head>
 <body>
-
-  <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
-
-    {{outlet}}
-  </script>
-
-  <script type="text/x-handlebars" data-template-name="index">
-    <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
-    </ul>
-  </script>
-
+  <div id="applicationHost" class="loading">
+    <p class="loading-text">Loading...</p>
+  </div>
 </body>
 </html>
