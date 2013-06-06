@@ -4,7 +4,8 @@ requirejs.config({
     'ember-data': '../vendor/ember-data',
     handlebars  : '../vendor/handlebars',
     jquery      : '../vendor/jquery',
-    bootstrap   : '../vendor/bootstrap'
+    bootstrap   : '../vendor/bootstrap',
+    filepicker  : 'https://api.filepicker.io/v1/filepicker'
   },
   shim: {
     templates: {
@@ -22,6 +23,9 @@ requirejs.config({
     bootstrap: {
       deps: ['jquery'],
       exports: 'jQuery.fn.affix'
+    },
+    filepicker: {
+      exports: 'filepicker'
     }
   }
 });
@@ -29,13 +33,12 @@ requirejs.config({
 require([
   'jquery'
   , 'app'
-  , 'config'
   , 'router'
   , 'bootstrap'
 
   // ROUTES
   , 'routes/index'
-  , 'routes/coasters/base'
+  , 'routes/coasters'
   , 'routes/coasters/index'
   , 'routes/coasters/show'
   , 'routes/coasters/new'
@@ -49,6 +52,7 @@ require([
   // CONTROLLERS
   , 'controllers/application'
   , 'controllers/coasters'
+  , 'controllers/coasters/new'
 
 
 ],

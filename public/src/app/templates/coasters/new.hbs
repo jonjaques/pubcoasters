@@ -1,5 +1,45 @@
 <div class="row">
   <div class="span12">
-    <h1>New Coaster Placeholder</h1>
+    <h1>New Coaster</h1>
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="newDesc">Name</label>
+        <div class="controls">
+          {{view Ember.TextField valueBinding="newName" id="newName"}}
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="newDesc">Description</label>
+        <div class="controls">
+          {{view Ember.TextArea valueBinding="newDesc" id="newDesc"}}
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="newImages">Attach Images</label>
+        <div class="controls">
+          <button class="btn btn-info" {{action openPicker}}>Upload</button>
+        </div>
+        {{#if newImages}}
+        <div class="controls">
+          {{#each img in newImages}}
+            <ul class="thumbnails">
+              <li style="width: 100px;">
+                <a href="#" class="thumbnail">
+                  <img {{bindAttr src="img"}}>
+                </a>
+              </li>
+            </ul>
+          {{/each}}
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" {{action createCoaster}}>Save changes</button>
+        <button type="button" class="btn" {{action cancel}}>Cancel</button>
+      </div>
+    </form>
   </div>
 </div>

@@ -2,24 +2,22 @@ define(['ember', 'ember-data', 'jquery'], function(Ember, DS, $) {
 
   DS.RESTAdapter.registerTransform('array', {
 
-    deserialize: function(serialized) {
-      if (Ember.typeOf(serialized) === 'string') {
-        return serialized.split(',').forEach(function(item) {
-          return $.trim(item);
-        });
-      } else if (Ember.typeOf(serialized) === 'array') {
-        return serialized;
+    deserialize: function(value) {
+      if (typeof value === 'string') {
+        return value.split(',');
       } else {
-        return [];
+        return value;
       }
     },
 
-    serialize: function(deserialized) {
-      if (Ember.typeOf(deserialized) === 'array') {
-        return deserialized;
-      } else {
-        return [];
+    serialize: function(value) {
+      var plainArray = [];
+      if (value && value instanceof Array) {
+        value.forEach(function(val) {
+          plainArray.push(val);
+        })
       }
+      return plainArray;
     }
 
   });

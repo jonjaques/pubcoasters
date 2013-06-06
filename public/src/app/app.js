@@ -1,6 +1,8 @@
 define([
   'ember',
   'ember-data',
+  'config',
+  'filepicker',
 
   // Static
   'templates',  // This will not exist until templates are compiled via Grunt
@@ -8,12 +10,16 @@ define([
   'utils/webapiAdapter',
   'utils/webapiSerializer'
 ],
-function(Ember, DS) {
+function(Ember, DS, config, filepicker) {
 
   var App = Ember.Application.create({
     rootElement: '#applicationHost',
     LOG_TRANSITIONS: true
   });
+
+  App.set('config', config);
+
+  filepicker.setKey(config.filepicker.apiKey);
 
   var adapter = DS.WebAPIAdapter.create({
       bulkCommit: false
@@ -37,10 +43,10 @@ function(Ember, DS) {
   //   primaryKey: "todoListId"
   // });
 
-  serializer.configure('App.Coaster', {
-    sideloadAs: "coaster",
-    primaryKey: "id"
-  });
+  // serializer.configure('App.Coaster', {
+  //   sideloadAs: "coaster",
+  //   primaryKey: "id"
+  // });
 
   App.deferReadiness();
 
