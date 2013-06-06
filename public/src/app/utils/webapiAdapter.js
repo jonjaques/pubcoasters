@@ -127,7 +127,7 @@ DS.WebAPIAdapter = DS.RESTAdapter.extend({
             delete data[primaryKey];
         }
 
-        this.ajax(this.buildURL(root), "POST", {
+        return this.ajax(this.buildURL(root), "POST", {
             data: data,
             context: this,
             success: function (json) {
@@ -147,7 +147,7 @@ DS.WebAPIAdapter = DS.RESTAdapter.extend({
 
         data = this.serialize(record, { includeId: true });
 
-        this.ajax(this.buildURL(root, id), "PUT", {
+        return this.ajax(this.buildURL(root, id), "PUT", {
             data: data,
             context: this,
             success: function (json) {
@@ -175,7 +175,7 @@ DS.WebAPIAdapter = DS.RESTAdapter.extend({
         var config = get(this, 'serializer').configurationForType(type),
             primaryKey = config && config.primaryKey;
 
-        this.ajax(this.buildURL(root, id), "DELETE", {
+        return this.ajax(this.buildURL(root, id), "DELETE", {
             context: this,
             success: function (json) {
                 Ember.run(this, function () {
@@ -215,7 +215,7 @@ DS.WebAPIAdapter = DS.RESTAdapter.extend({
             }
         }
 
-        return jQuery.ajax(hash);
+        return Ember.$.ajax(hash);
     },
 
     pluralize: function (string) {
